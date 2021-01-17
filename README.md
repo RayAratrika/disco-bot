@@ -1,6 +1,6 @@
 # disco-bot
 music suggestion bot for discord.
-disco-hello: Greeting message
+disco-hello: Greeting message\n
 disco-h: Suggest happy songs
 disco-l: Suggest sad songs
 disco-pop: Suggest pop songs of all ages
