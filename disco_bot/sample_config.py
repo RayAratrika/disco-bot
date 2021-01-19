@@ -14,6 +14,9 @@ class Config(object):
     API_KEY = "YOUR KEY HERE"
     USER_AGENT = "YOUR NAME HERE"
 
+    # OPTIONAL
+    BOT_COLOR = 0xFFA000
+
 
 class Production(Config):
     LOGGER = False

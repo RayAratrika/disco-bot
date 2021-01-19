@@ -13,7 +13,7 @@ bot_color = 0xFFA000;
 #on server join
 @bot.event
 async def on_guild_join(guild):
-	bot_color = 0xFFA000;
+	bot_color = Config.BOT_COLOR
 	for ch in guild.text_channels: 
 		if ch.permissions_for(guild.me).send_messages: 
 			emb = dc.Embed(
@@ -57,7 +57,7 @@ async def on_ready():
 #on message on channel
 @bot.event
 async def on_message(msg):
-	bot_color = 0xFFA000;
+	bot_color = Config.BOT_COLOR
 	# check if author is bot or not
 	if msg.author == bot.user: return;
 
