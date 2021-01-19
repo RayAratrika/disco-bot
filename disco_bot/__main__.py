@@ -6,11 +6,11 @@ import disco_bot.modules.last_fm as lfm;
 from disco_bot.config import Development as Config
 token = Config.BOT_TOKEN
 
-#need intents for accessing members and certain other details
+# Need intents for accessing members and certain other details
 bot = dc.Client(intents = dc.Intents.all());
 bot_color = 0xFFA000;
 
-#on server join
+# On server join
 @bot.event
 async def on_guild_join(guild):
 	bot_color = Config.BOT_COLOR
@@ -49,19 +49,19 @@ async def on_guild_join(guild):
 			bot_color = botsent.author.roles[-1].color;
 		break;
 
-#on bot ready
+# When the bot is ready to run
 @bot.event
 async def on_ready():
 	print(f"{bot.user} ready...")
 
-#on message on channel
+# When a message is recieved on a channel
 @bot.event
 async def on_message(msg):
 	bot_color = Config.BOT_COLOR
-	# check if author is bot or not
+	# Check if author is a bot or not
 	if msg.author == bot.user: return;
 
-	#disco-hello: greeting message
+	# disco-hello: greeting message
 	if msg.content == ('d-hello'):
 		dsc = "Hello "+ msg.author.mention +" my musical human fren :)"
 		emb = dc.Embed(
@@ -75,7 +75,7 @@ async def on_message(msg):
 		#print(botsent.author.roles[-1].color);
 		print(type(bot.user));
 
-	#disco-h: happy songs
+	# disco-h: happy songs
 	elif msg.content == ('d-h'):
 		emb = dc.Embed(
 			title = "Happy Happy Happy!",
@@ -84,7 +84,7 @@ async def on_message(msg):
 
 		await msg.channel.send(embed = emb);
 
-	#disco-l: sad songs
+	# disco-l: sad songs
 	elif msg.content == ('d-l'):
 		emb = dc.Embed(
 			title = "Feeling Low?",
@@ -94,7 +94,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	#disco-charts: chart hits top10
+	# disco-charts: chart hits top10
 	elif msg.content == ('d-charts'):
 		i = 0; dsc = "";
 		texts = lfm.chart();
@@ -109,7 +109,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	#disco-artist-abc: top10 tracks of artists
+	# disco-artist-abc: top10 tracks of the specified artist
 	elif msg.content.startswith('da-'):
 		artist = msg.content.split('da-')[1];
 		i = 0; dsc = "";
@@ -125,7 +125,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	#disco-genre-abc: yt playlist links of genre
+	# disco-genre-abc: YT playlist links of the specified genre
 	elif msg.content.startswith('dg-'):
 		genre = msg.content.split('dg-')[1];
 		i = 0; dsc = "";
@@ -141,7 +141,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	#disco-info: info about the bot
+	# disco-help: Help about the bots commands and features
 	elif msg.content == ('d-help'):
 		emb = dc.Embed(
 			title = "Here is some helpful information about me-",
@@ -173,7 +173,7 @@ async def on_message(msg):
 
 		await msg.channel.send(embed = emb);
 
-	#mentioning the bot
+	# When the bot is mentioned
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
 			title = "I'm needed?!",

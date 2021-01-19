@@ -1,3 +1,4 @@
+# Ensure default configs exist to prevent unnecessary bail outs and API calls
 if not __name__.endswith("sample_config"):
     import sys
     print("The README is there to be read. Extend this sample_config to a seperate config.py file, don't just rename and change "
