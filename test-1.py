@@ -11,7 +11,7 @@ api_key = os.getenv('API_KEY');
 user_agent = os.getenv('USER_AGENT');
 
 
-# //chart top tracks 
+#chart top tracks
 def last_fm_chart():
 	i = 1;
 	url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + api_key + "&format=json";
@@ -27,7 +27,7 @@ def last_fm_chart():
 		i += 1;
 	return tracks;
 
-# //songs by artist
+#songs by artist
 def last_fm_artist(artist):
 	i = 1;
 	url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
@@ -43,7 +43,7 @@ def last_fm_artist(artist):
 		i += 1; print(i);
 	return artist_track;
 
-# //get genre playlist from last.fm//
+#get genre playlist from last.fm
 def last_fm_genre(genre):
 	links = [];
 	yt_url = yt(genre+" playlist", max_results=10).to_dict();
@@ -53,11 +53,11 @@ def last_fm_genre(genre):
 
 
 
-# //need intents for accessing members and certain other details//
+#need intents for accessing members and certain other details
 bot = dc.Client(intents = dc.Intents.all());
 bot_color = 0xFFA000;
 
-# //on server join//
+#on server join
 @bot.event
 async def on_guild_join(guild):
 	bot_color = 0xFFA000;
@@ -96,12 +96,12 @@ async def on_guild_join(guild):
 			bot_color = botsent.author.roles[-1].color;
 		break;
 
-# //on bot ready//
+#on bot ready
 @bot.event
 async def on_ready():
 	print(f"{bot.user} ready...")
 
-# //on message on channel//
+#on message on channel
 @bot.event
 async def on_message(msg):
 	bot_color = 0xFFA000;
@@ -122,7 +122,7 @@ async def on_message(msg):
 		#print(botsent.author.roles[-1].color);
 		print(type(bot.user));
 
-	# disco-h: happy songs
+	#disco-h: happy songs
 	elif msg.content == ('d-h'):
 		emb = dc.Embed(
 			title = "Happy Happy Happy!",
@@ -131,7 +131,7 @@ async def on_message(msg):
 
 		await msg.channel.send(embed = emb);
 	
-	# disco-l: sad songs
+	#disco-l: sad songs
 	elif msg.content == ('d-l'):
 		emb = dc.Embed(
 			title = "Feeling Low?", 
@@ -141,7 +141,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	# disco-charts: chart hits top10
+	#disco-charts: chart hits top10
 	elif msg.content == ('d-charts'):
 		i = 0; dsc = "";
 		texts = last_fm_chart();
@@ -156,7 +156,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 
-	# disco-artist-abc: top10 tracks of artists
+	#disco-artist-abc: top10 tracks of artists
 	elif msg.content.startswith('da-'):
 		artist = msg.content.split('da-')[1];
 		i = 0; dsc = "";
@@ -172,7 +172,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 	
-	# disco-genre-abc: yt playlist links of genre
+	#disco-genre-abc: yt playlist links of genre
 	elif msg.content.startswith('dg-'):
 		genre = msg.content.split('dg-')[1];
 		i = 0; dsc = "";
@@ -188,7 +188,7 @@ async def on_message(msg):
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
 	
-	# disco-info: info about the bot
+	#disco-info: info about the bot
 	elif msg.content == ('d-help'):
 		emb = dc.Embed(
 			title = "Here is some helpful information about me-",
@@ -220,7 +220,7 @@ async def on_message(msg):
 
 		await msg.channel.send(embed = emb);
 	
-	# mentionong the bot
+	#mentionong the bot
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
 			title = "I'm needed?!", 
