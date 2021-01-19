@@ -1,8 +1,9 @@
 import discord as dc;
+import json;
 import os;
 import requests;
+
 from dotenv import load_dotenv;
-import json;
 from youtube_search import YoutubeSearch as yt;
 
 load_dotenv();
@@ -32,7 +33,7 @@ def last_fm_artist(artist):
 	i = 1;
 	url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
 	res = requests.get(url);
-	artist_track = [];
+	irtist_track = [];
 	for r in res.json()['toptracks']['track']:
 		if(i == 11): break;
 		track_url = yt((str(r['name']) + " - " + artist + " lyrics"), max_results=1).to_dict();
@@ -220,7 +221,7 @@ async def on_message(msg):
 
 		await msg.channel.send(embed = emb);
 	
-	#mentionong the bot
+	#mentioning the bot
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
 			title = "I'm needed?!", 
