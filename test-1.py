@@ -1,58 +1,9 @@
 import discord as dc;
 import json;
-import os;
-import requests;
+import keys;
+import last_fm as lfm;
 
-from dotenv import load_dotenv;
-from youtube_search import YoutubeSearch as yt;
-
-load_dotenv();
-token = os.getenv('BOT_TOKEN');
-api_key = os.getenv('API_KEY');
-user_agent = os.getenv('USER_AGENT');
-
-
-#chart top tracks
-def last_fm_chart():
-	i = 1;
-	url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + api_key + "&format=json";
-	res = requests.get(url);
-	tracks = [];
-	for r in res.json()['tracks']['track']:
-		if(i == 11): break;
-		track_url = yt((str(r['name']) + " - " + str(r['artist']['name']) + " lyrics"), max_results=1).to_dict();
-		for t in track_url:
-			yt_url = "https://www.youtube.com/watch?v=" + str(t['id']);
-		text = str(r['name']) + " - " + str(r['artist']['name']) + "\n" + yt_url + "\n";
-		tracks.append(text);
-		i += 1;
-	return tracks;
-
-#songs by artist
-def last_fm_artist(artist):
-	i = 1;
-	url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
-	res = requests.get(url);
-	irtist_track = [];
-	for r in res.json()['toptracks']['track']:
-		if(i == 11): break;
-		track_url = yt((str(r['name']) + " - " + artist + " lyrics"), max_results=1).to_dict();
-		for t in track_url:
-			yt_url = "https://www.youtube.com/watch?v=" + str(t['id']);
-		text = str(r['name']) + " - " + yt_url + "\n";
-		artist_track.append(text);
-		i += 1; print(i);
-	return artist_track;
-
-#get genre playlist from last.fm
-def last_fm_genre(genre):
-	links = [];
-	yt_url = yt(genre+" playlist", max_results=10).to_dict();
-	for r in yt_url: 
-		links.append("https://www.youtube.com/watch?v=" + str(r['id']) + " - " + str(r['title']) +"\n");
-	return links;
-
-
+token = keys.bot_token();
 
 #need intents for accessing members and certain other details
 bot = dc.Client(intents = dc.Intents.all());
@@ -145,7 +96,7 @@ async def on_message(msg):
 	#disco-charts: chart hits top10
 	elif msg.content == ('d-charts'):
 		i = 0; dsc = "";
-		texts = last_fm_chart();
+		texts = lfm.chart();
 		for txt in texts:
 			i += 1;
 			dsc += str(i) + ". " + txt;
@@ -161,7 +112,7 @@ async def on_message(msg):
 	elif msg.content.startswith('da-'):
 		artist = msg.content.split('da-')[1];
 		i = 0; dsc = "";
-		texts = last_fm_artist(artist);
+		texts = lfm.artist(artist);
 		for txt in texts:
 			i += 1;
 			dsc += str(i) + ". " + txt;
@@ -177,7 +128,7 @@ async def on_message(msg):
 	elif msg.content.startswith('dg-'):
 		genre = msg.content.split('dg-')[1];
 		i = 0; dsc = "";
-		texts = last_fm_genre(genre);
+		texts = lfm.genre(genre);
 		for txt in texts:
 			i += 1;
 			dsc += str(i) + ". " + txt;
@@ -225,7 +176,7 @@ async def on_message(msg):
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
 			title = "I'm needed?!", 
-			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>> d-h\n>> d-l\n>> d-hello\n>> dg-<genre>\n>> da-<artist>\n>> d-info", 
+			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>>d-hello\n>> d-h\n>> d-l\n>> d-charts\n>> dg-<genre>\n>> da-<artist>\n>> d-info", 
 			color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
