@@ -10,8 +10,6 @@ token = os.getenv('BOT_TOKEN');
 api_key = os.getenv('API_KEY');
 user_agent = os.getenv('USER_AGENT');
 
-'''yt_url = yt("pop playlist", max_results=10).to_dict();
-for r in yt_url: print("https://www.youtube.com/watch?v=" + str(r['id']) + " - " + str(r['title']) +"\n");'''
 
 # //chart top tracks 
 def last_fm_chart():
@@ -70,28 +68,28 @@ async def on_guild_join(guild):
 				description = "Hi! I'm Disco, a music suggestion bot.\nLet's get ready for some music, shall we?\n\nAdd me to other servers with the link below:\nhttps://discord.com/api/oauth2/authorize?client_id=800048826756890655&permissions=3214400&scope=bot \nHere are some commands I follow:\n",
 				color = bot_color);
 			emb.add_field(
-				name="disco-hello",
+				name="d-hello",
 				value="Greeting message",
 				inline=True);
 			emb.add_field(
-				name="disco-help",
+				name="d-info",
 				value="Info about the bot",
 				inline=True);
 			emb.add_field(
-				name="disco-h",
+				name="d-h",
 				value="Suggest happy songs",
 				inline=True);
 			emb.add_field(
-				name="disco-l",
+				name="d-l",
 				value="Suggest sad songs",
 				inline=True);
 			emb.add_field(
-				name="disco-pop",
-				value="Suggest pop songs of all ages",
+				name="da-<artist>",
+				value="Suggest top 10 songs of the artist",
 				inline=True);
 			emb.add_field(
-				name="disco-rock",
-				value="Suggest rock songs of all ages",
+				name="dg-<genre>",
+				value="Suggest 10 <genre> playlist",
 				inline=True);
 
 			botsent = await ch.send(embed = emb);
@@ -196,27 +194,27 @@ async def on_message(msg):
 			title = "Here is some helpful information about me-",
 			color = bot_color);
 		emb.add_field(
-			name="disco-hello",
+			name="d-hello",
 			value="Greeting message",
 			inline=True);
 		emb.add_field(
-			name="disco-h",
+			name="d-h",
 			value="Suggest happy songs",
 			inline=True);
 		emb.add_field(
-			name="disco-l",
+			name="d-l",
 			value="Suggest sad songs",
 			inline=True);
 		emb.add_field(
-			name="disco-pop",
-			value="Suggest pop songs of all ages",
+			name="dg-<genre>",
+			value="Suggest 10 <genre> playlist",
 			inline=True);
 		emb.add_field(
-			name="disco-rock",
-			value="Suggest rock songs of all ages",
+			name="da-<artist>",
+			value="Suggest top 10 songs of <artist>",
 			inline=True);
 		emb.add_field(
-			name="disco-help",
+			name="d-help",
 			value="Info about the bot",
 			inline=True);
 
@@ -226,7 +224,7 @@ async def on_message(msg):
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
 			title = "I'm needed?!", 
-			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>> disco-h\n>> disco-l\n>> disco-hello\n>> disco-pop\n>> disco-rock\n>> disco-info", 
+			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>> d-h\n>> d-l\n>> d-hello\n>> dg-<genre>\n>> da-<artist>\n>> d-info", 
 			color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
