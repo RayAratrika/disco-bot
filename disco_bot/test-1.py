@@ -1,7 +1,7 @@
 import discord as dc;
 import json;
 import keys;
-import last_fm as lfm;
+import disco_bot.modules.last_fm as lfm;
 
 token = keys.bot_token();
 
