@@ -14,10 +14,10 @@ bot_color = 0xFFA000;
 @bot.event
 async def on_guild_join(guild):
 	bot_color = Config.BOT_COLOR
-	for ch in guild.text_channels: 
-		if ch.permissions_for(guild.me).send_messages: 
+	for ch in guild.text_channels:
+		if ch.permissions_for(guild.me).send_messages:
 			emb = dc.Embed(
-				title = "Hello!", 
+				title = "Hello!",
 				description = "Hi! I'm Disco, a music suggestion bot.\nLet's get ready for some music, shall we?\n\nAdd me to other servers with the link below:\nhttps://discord.com/api/oauth2/authorize?client_id=800048826756890655&permissions=3214400&scope=bot \nHere are some commands I follow:\n",
 				color = bot_color);
 			emb.add_field(
@@ -65,8 +65,8 @@ async def on_message(msg):
 	if msg.content == ('d-hello'):
 		dsc = "Hello "+ msg.author.mention +" my musical human fren :)"
 		emb = dc.Embed(
-			title = "Greetings!", 
-			description = dsc, 
+			title = "Greetings!",
+			description = dsc,
 			color = bot_color);#  liked- 3D5AFE, B39DDB, 90CAF9, 1123A0
 
 		botsent = await msg.channel.send(embed = emb);
@@ -83,11 +83,11 @@ async def on_message(msg):
 			color = bot_color);
 
 		await msg.channel.send(embed = emb);
-	
+
 	#disco-l: sad songs
 	elif msg.content == ('d-l'):
 		emb = dc.Embed(
-			title = "Feeling Low?", 
+			title = "Feeling Low?",
 			description = "Here are some low songs for you-\n1.Lovely - Billie Eilish ft. Khalid\n2.In loving memeory - Alter Bridge\n\nI'm here if you need me for anything my friend :)",
 			color = bot_color);
 
@@ -102,7 +102,7 @@ async def on_message(msg):
 			i += 1;
 			dsc += str(i) + ". " + txt;
 		emb = dc.Embed(
-			title = "Chart-Busters!!!", 
+			title = "Chart-Busters!!!",
 			description = "Here are some YouTube links for you: \n"+dsc,
 			color = bot_color);
 
@@ -118,13 +118,13 @@ async def on_message(msg):
 			i += 1;
 			dsc += str(i) + ". " + txt;
 		emb = dc.Embed(
-			title = "Top Tracks of "+ artist +"!", 
+			title = "Top Tracks of "+ artist +"!",
 			description = "Here are some YouTube links for you: \n"+dsc,
 			color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
-	
+
 	#disco-genre-abc: yt playlist links of genre
 	elif msg.content.startswith('dg-'):
 		genre = msg.content.split('dg-')[1];
@@ -134,13 +134,13 @@ async def on_message(msg):
 			i += 1;
 			dsc += str(i) + ". " + txt;
 		emb = dc.Embed(
-			title = "Genre-ous", 
+			title = "Genre-ous",
 			description = "Here are some YouTube links for you: \n"+dsc,
 			color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
-	
+
 	#disco-info: info about the bot
 	elif msg.content == ('d-help'):
 		emb = dc.Embed(
@@ -172,12 +172,12 @@ async def on_message(msg):
 			inline=True);
 
 		await msg.channel.send(embed = emb);
-	
+
 	#mentioning the bot
 	if bot.user.mentioned_in(msg) and msg.mention_everyone is False:
 		emb = dc.Embed(
-			title = "I'm needed?!", 
-			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>>d-hello\n>> d-h\n>> d-l\n>> d-charts\n>> dg-<genre>\n>> da-<artist>\n>> d-info", 
+			title = "I'm needed?!",
+			description = f"Yes {msg.author.mention} how can I be of help to you?\n\nTry out these commands-\n>>d-hello\n>> d-h\n>> d-l\n>> d-charts\n>> dg-<genre>\n>> da-<artist>\n>> d-info",
 			color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);

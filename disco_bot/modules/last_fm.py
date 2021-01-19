@@ -44,6 +44,6 @@ def artist(artist):
 def genre(genre):
 	links = [];
 	yt_url = yt(genre+" playlist", max_results=10).to_dict();
-	for r in yt_url: 
+	for r in yt_url:
 		links.append("https://www.youtube.com/watch?v=" + str(r['id']) + " - " + str(r['title']) +"\n");
 	return links;
