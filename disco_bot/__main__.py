@@ -1,9 +1,10 @@
 import discord as dc;
 import json;
-import keys;
+import disco_bot.config;
 import disco_bot.modules.last_fm as lfm;
 
-token = keys.bot_token();
+from disco_bot.config import Development as Config
+token = Config.BOT_TOKEN
 
 #need intents for accessing members and certain other details
 bot = dc.Client(intents = dc.Intents.all());

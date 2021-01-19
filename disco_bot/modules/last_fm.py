@@ -1,10 +1,10 @@
-import keys;
+import disco_bot.config;
 import requests as req;
 from youtube_search import YoutubeSearch as yt;
 
-api_key = keys.lfm_api_key();
-user_agent = keys.lfm_user_agent();
-
+from disco_bot.config import Development as Config
+api_key = Config.API_KEY
+user_agent = Config.USER_AGENT;
 
 #chart top tracks
 def chart():
