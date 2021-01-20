@@ -2,8 +2,6 @@
 music suggestion bot for discord.<br/>
 bot-commands: <br />
 d-hello: Greeting message,<br/>
-d-h: Suggest happy songs,<br/>
-d-l: Suggest sad songs,<br/>
 d-charts: YT links of top10 chart hits<br />
 dg-"genre": YT links of "genre" playlist<br />
 da-"artist": YT links of top10 tracks of "artist"<br />
