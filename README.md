@@ -1,5 +1,6 @@
 # disco-bot
 music suggestion bot for discord.<br/>
+bot-commands: <br />
 d-hello: Greeting message,<br/>
 d-h: Suggest happy songs,<br/>
 d-l: Suggest sad songs,<br/>
