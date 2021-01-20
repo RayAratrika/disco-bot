@@ -27,14 +27,6 @@ async def on_guild_join(guild):
 				name="d-help",
 				value="Info about the bot",
 				inline=True);
-			'''emb.add_field(
-				name="d-h",
-				value="Suggest happy songs",
-				inline=True);
-			emb.add_field(
-				name="d-l",
-				value="Suggest sad songs",
-				inline=True);'''
 			emb.add_field(
 				name="da-<artist>",
 				value="Suggest top 10 songs of the artist",
@@ -73,25 +65,6 @@ async def on_message(msg):
 		#for role in msg.guild.roles: print(role.name, ": ",role.color);
 		#print(botsent.author.roles[-1].color);
 		print(type(bot.user));
-
-	#disco-h: happy songs
-	elif msg.content == ('d-h'):
-		emb = dc.Embed(
-			title = "Happy Happy Happy!",
-			description = "Here are some happy songs for you-\n1.Dancing with myself - Billy Idol\n2.Back in the game - Airbourne\n\nGlad I could take part in your happiness!",
-			color = bot_color);
-
-		await msg.channel.send(embed = emb);
-	
-	#disco-l: sad songs
-	elif msg.content == ('d-l'):
-		emb = dc.Embed(
-			title = "Feeling Low?", 
-			description = "Here are some low songs for you-\n1.Lovely - Billie Eilish ft. Khalid\n2.In loving memeory - Alter Bridge\n\nI'm here if you need me for anything my friend :)",
-			color = bot_color);
-
-		botsent = await msg.channel.send(embed = emb);
-		bot_color = botsent.author.roles[-1].color;
 
 	#disco-charts: chart hits top10
 	elif msg.content == ('d-charts'):
@@ -149,14 +122,6 @@ async def on_message(msg):
 			name="d-hello",
 			value="Greeting message",
 			inline=True);
-		'''emb.add_field(
-			name="d-h",
-			value="Suggest happy songs",
-			inline=True);
-		emb.add_field(
-			name="d-l",
-			value="Suggest sad songs",
-			inline=True);'''
 		emb.add_field(
 			name="dg-<genre>",
 			value="Suggest 10 <genre> playlist",
