@@ -51,9 +51,10 @@ async def on_message(msg):
 	bot_color = 0xFFA000;
 	# check if author is bot or not
 	if msg.author == bot.user: return;
-
+	
+	og_msg = msg.content.lower();
 	#disco-hello: greeting message
-	if msg.content == ('d-hello'):
+	if og_msg == ('d-hello'):
 		dsc = "Hello "+ msg.author.mention +" my musical human fren :)"
 		emb = dc.Embed(
 			title = "Greetings!", 
@@ -64,57 +65,79 @@ async def on_message(msg):
 		bot_color = botsent.author.roles[-1].color;
 		#for role in msg.guild.roles: print(role.name, ": ",role.color);
 		#print(botsent.author.roles[-1].color);
-		print(type(bot.user));
+		#print(type(bot.user));
 
 	#disco-charts: chart hits top10
-	elif msg.content == ('d-charts'):
+	elif og_msg == ('d-charts'):
 		i = 0; dsc = "";
 		texts = lfm.chart();
-		for txt in texts:
-			i += 1;
-			dsc += str(i) + ". " + txt;
-		emb = dc.Embed(
-			title = "Chart-Busters!!!", 
-			description = "Here are some YouTube links for you: \n"+dsc,
-			color = bot_color);
+		if texts == []:
+			emb = dc.Embed(
+				title = "OOPS!!", 
+				description = "Try Again :(",
+				color = bot_color);
+		else:
+			for txt in texts:
+				i += 1;
+				dsc += str(i) + ". " + txt;
+				emb = dc.Embed(
+					title = "Chart-Busters!!!", 
+					description = "Here are some YouTube links for you: \n"+dsc,
+					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
 		bot_color = botsent.author.roles[-1].color;
 
 	#disco-artist-abc: top10 tracks of artists
-	elif msg.content.startswith('da-'):
-		artist = msg.content.split('da-')[1];
+	elif og_msg.startswith('da-'):
+		artist = og_msg.split('da-')[1];
 		i = 0; dsc = "";
 		texts = lfm.artist(artist);
-		for txt in texts:
-			i += 1;
-			dsc += str(i) + ". " + txt;
-		emb = dc.Embed(
-			title = "Top Tracks of "+ artist +"!", 
-			description = "Here are some YouTube links for you: \n"+dsc,
-			color = bot_color);
+		if texts == []:
+			emb = dc.Embed(
+				title = "OOPS!!", 
+				description = "Couldn't find the artist you're looking for :(",
+				color = bot_color);
+
+		else: 
+			for txt in texts:
+				i += 1;
+				dsc += str(i) + ". " + txt;
+				emb = dc.Embed(
+					title = "Top Tracks of "+ artist +"!", 
+					description = "Here are some YouTube links for you: \n"+dsc,
+					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
 		bot_color = botsent.author.roles[-1].color;
 	
 	#disco-genre-abc: yt playlist links of genre
-	elif msg.content.startswith('dg-'):
-		genre = msg.content.split('dg-')[1];
+	elif og_msg.startswith('dg-'):
+		genre = og_msg.split('dg-')[1];
 		i = 0; dsc = "";
 		texts = lfm.genre(genre);
-		for txt in texts:
-			i += 1;
-			dsc += str(i) + ". " + txt;
-		emb = dc.Embed(
-			title = "Genre-ous", 
-			description = "Here are some YouTube links for you: \n"+dsc,
-			color = bot_color);
+		if texts == []:
+			emb = dc.Embed(
+				title = "OOPS!!", 
+				description = "Couldn't find the genre you're looking for :(",
+				color = bot_color);
+		else:
+			for txt in texts:
+				i += 1;
+				dsc += str(i) + ". " + txt;
+				emb = dc.Embed(
+					title = "Genre-ous", 
+					description = "Here are some YouTube links for you: \n"+dsc,
+					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
 		bot_color = botsent.author.roles[-1].color;
 	
 	#disco-info: info about the bot
-	elif msg.content == ('d-help'):
+	elif og_msg == ('d-help'):
 		emb = dc.Embed(
 			title = "Here is some helpful information about me-",
 			color = bot_color);
@@ -146,7 +169,7 @@ async def on_message(msg):
 
 		botsent = await msg.channel.send(embed = emb);
 		bot_color = botsent.author.roles[-1].color;
-		await botsent.add_reaction("\N{EYES}");
+		await botsent.add_reaction('\N{EYES}');
 
 
 bot.run(token);
