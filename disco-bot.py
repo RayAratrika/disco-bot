@@ -7,7 +7,6 @@ token = keys.bot_token();
 
 #need intents for accessing members and certain other details
 bot = dc.Client(intents = dc.Intents.all());
-bot_color = 0xFFA000;
 
 #on server join
 @bot.event
@@ -37,7 +36,7 @@ async def on_guild_join(guild):
 				inline=True);
 
 			botsent = await ch.send(embed = emb);
-			bot_color = botsent.author.roles[-1].color;
+			bot_color = botsent.author.roles[-1].color.split('#')[1];
 		break;
 
 #on bot ready
@@ -62,10 +61,56 @@ async def on_message(msg):
 			color = bot_color); #liked- 3D5AFE, B39DDB, 90CAF9, 1123A0
 
 		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{VICTORY HAND}');
 		bot_color = botsent.author.roles[-1].color;
-		#for role in msg.guild.roles: print(role.name, ": ",role.color);
-		#print(botsent.author.roles[-1].color);
-		#print(type(bot.user));
+		print(bot_color);		
+		
+	#disco-charts: chart hits top10 using threads
+	elif og_msg == ('dt-charts'):
+		i = 0; dsc = "";
+		texts = lfm.chart_t();
+		if texts == []:
+			emb = dc.Embed(
+				title = "OOPS!!", 
+				description = "Try Again :(",
+				color = bot_color);
+		else:
+			for t in texts:
+				i += 1;
+				dsc += str(i) + ". " + t;
+				emb = dc.Embed(
+					title = "Chart-Busters!!!", 
+					description = "Here are some YouTube links for you: \n"+dsc,
+					color = bot_color);
+
+		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else await botsent.add_reaction('\N{MUSICAL NOTE}');
+		bot_color = botsent.author.roles[-1].color;
+		
+	#disco-artist-abc: top10 tracks of artists using threads
+	elif og_msg.startswith('dta-'):
+		artist = og_msg.split('dta-')[1];
+		i = 0; dsc = "";
+		texts = lfm.artist_t(artist);
+		if texts == []:
+			emb = dc.Embed(
+				title = "OOPS!!", 
+				description = "Couldn't find the artist you're looking for :(",
+				color = bot_color);
+
+		else: 
+			for txt in texts:
+				i += 1;
+				dsc += str(i) + ". " + txt;
+				emb = dc.Embed(
+					title = "Top Tracks of "+ artist +"!", 
+					description = "Here are some YouTube links for you: \n"+dsc,
+					color = bot_color);
+
+		botsent = await msg.channel.send(embed = emb);
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else await botsent.add_reaction('\N{MUSICAL NOTE}');
+		bot_color = botsent.author.roles[-1].color;
+	
 
 	#disco-charts: chart hits top10
 	elif og_msg == ('d-charts'):
@@ -77,16 +122,16 @@ async def on_message(msg):
 				description = "Try Again :(",
 				color = bot_color);
 		else:
-			for txt in texts:
+			for t in texts:
 				i += 1;
-				dsc += str(i) + ". " + txt;
+				dsc += str(i) + ". " + t;
 				emb = dc.Embed(
 					title = "Chart-Busters!!!", 
 					description = "Here are some YouTube links for you: \n"+dsc,
 					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
-		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else await botsent.add_reaction('\N{MUSICAL NOTE}');
 		bot_color = botsent.author.roles[-1].color;
 
 	#disco-artist-abc: top10 tracks of artists
@@ -110,9 +155,9 @@ async def on_message(msg):
 					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
-		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else await botsent.add_reaction('\N{MUSICAL NOTE}');
 		bot_color = botsent.author.roles[-1].color;
-	
+
 	#disco-genre-abc: yt playlist links of genre
 	elif og_msg.startswith('dg-'):
 		genre = og_msg.split('dg-')[1];
@@ -133,7 +178,7 @@ async def on_message(msg):
 					color = bot_color);
 
 		botsent = await msg.channel.send(embed = emb);
-		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else "" ;
+		await botsent.add_reaction('\N{PENSIVE FACE}') if texts == [] else await botsent.add_reaction('\N{MUSICAL NOTE}');
 		bot_color = botsent.author.roles[-1].color;
 	
 	#disco-info: info about the bot
