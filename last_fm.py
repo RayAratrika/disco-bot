@@ -105,7 +105,7 @@ def artist(artist):
 			if(i+1 == 11): break;
 	except KeyError: print("Artist not found");
 
-	return artist_track;
+	return tracks;
 
 
 #get genre playlist from last.fm
@@ -117,4 +117,4 @@ def genre(genre):
 			links.append(str(v['link']) + " - " + str(v['title']) + "\n");
 	except Exception as e: print(e.__class__);
 
-	return links;
+	return tracks;
