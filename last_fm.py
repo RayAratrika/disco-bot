@@ -15,7 +15,7 @@ threads  = [];
 #threading function
 def thread_reqs(name, artist_name, i, func):
 	try: searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);
-	except: searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);
+	except: thread_reqs(name, artist_name, i, func);
 	if func=="chart":
 		for v in searches.result()['result']:
 			#print(i, "(t)", name, " - ", artist_name);
@@ -74,7 +74,7 @@ def genre(genre):
 	tracks.clear();
 	try:
 		try: searches = VideosSearch(genre+" playlist", limit=10);
-		except: searches = VideosSearch(genre+" playlist", limit=10);
+		except: genre(genre);
 		for v in searches.result()['result']:
 			tracks.append(str(v['link']) + " - " + str(v['title']) + "\n");
 	except Exception as e: 
