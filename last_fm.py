@@ -12,27 +12,16 @@ user_agent = keys.lfm_user_agent();
 tracks = [];
 threads  = [];
 
+#thread requests
 def thread_reqs(name, artist_name, i, func):
 	tracks.clear();
 	searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);
-	for v in searches.result()['result']:
+	if func=="chart":
+		for v in searches.result()['result']:
 			tracks.insert(i, (name + " - " + artist_name + "\n" + v['link'] + "\n"));
-			#print(i, (name + " - " + artist_name + "\n" + v['link'] + "\n"))
-
-	#will implement this later
-	'''if func=="chart":
+	elif func=="artist":
 		for v in searches.result()['result']:
-			tracks.insert(i, (name + " - " + artist_name + "\n" + v['link'] + "\n"));'''
-	'''elif func=="artist":
-		for v in searches.result()['result']:
-			tracks.insert(i, (name + " - " + v['link'] + "\n"));'''
-
-def thread_artist(name, artist, i, func):
-	tracks.clear();
-	searches = VideosSearch((name + " - " + artist + " lyrics"), limit = 1);
-	for v in searches.result()['result']:
-		tracks.insert(i, (name + " - " + v['link'] + "\n"));
-
+			tracks.insert(i, (name + " - " + v['link'] + "\n"));
 
 #chart top tracks - threads
 def chart_t():
@@ -62,7 +51,7 @@ def artist_t(artist):
 			process.start();
 			threads.append(process);
 			i += 1;
-			if(i+1 == 11): break;
+			if i == 10 : break;
 	except KeyError: print("Artist not found");
 
 	for process in threads:
@@ -102,7 +91,7 @@ def artist(artist):
 			for v in searches.result()['result']:
 				artist_track.append(str(r['name']) + " - " + v['link'] + "\n");
 			i += 1;
-			if(i+1 == 11): break;
+			if i == 10: break;
 	except KeyError: print("Artist not found");
 
 	return tracks;
