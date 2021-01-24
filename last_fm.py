@@ -76,7 +76,7 @@ def genre(genre):
 		try: searches = VideosSearch(genre+" playlist", limit=10);
 		except: genre(genre);
 		for v in searches.result()['result']:
-			tracks.append(str(v['link']) + " - " + str(v['title']) + "\n");
+			tracks.append(str(v['title']) + " - " + str(v['link']) + "\n");
 	except Exception as e: 
 		print(e);
 		return empty;
