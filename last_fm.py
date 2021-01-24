@@ -16,11 +16,12 @@ def thread_reqs(name, artist_name, i, func):
 	searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);	
 	if func=="chart":
 		for v in searches.result()['result']:
-			print(i, "(t)", name, " - ", artist_name);
-			tracks.insert(i, (name + " - " + artist_name + "\n" + v['link'] + "\n"));
+			#print(i, "(t)", name, " - ", artist_name);
+			tracks[i] = (name + " - " + artist_name + "\n" + v['link'] + "\n"));
 	elif func=="artist":
 		for v in searches.result()['result']:
-			tracks.insert(i, (name + " - " + v['link'] + "\n"));
+			#print(i, "(t)", name, " - ", artist_name);
+			tracks[i] = (name + " - " + v['link'] + "\n"));
 
 #chart top tracks - threads
 def chart_t():
@@ -67,7 +68,7 @@ def genre(genre):
 	try:
 		searches = VideosSearch(genre+" playlist", limit=10);
 		for v in searches.result()['result']:
-			links.append(str(v['link']) + " - " + str(v['title']) + "\n");
+			tracks.append(str(v['link']) + " - " + str(v['title']) + "\n");
 	except Exception as e: print(e.__class__);
 
-	return links;
+	return tracks;
