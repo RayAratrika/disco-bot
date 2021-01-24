@@ -17,11 +17,11 @@ def thread_reqs(name, artist_name, i, func):
 	if func=="chart":
 		for v in searches.result()['result']:
 			#print(i, "(t)", name, " - ", artist_name);
-			tracks[i] = (name + " - " + artist_name + "\n" + v['link'] + "\n"));
+			tracks[i] = (name + " - " + artist_name + "\n" + v['link'] + "\n");
 	elif func=="artist":
 		for v in searches.result()['result']:
 			#print(i, "(t)", name, " - ", artist_name);
-			tracks[i] = (name + " - " + v['link'] + "\n"));
+			tracks[i] = (name + " - " + v['link'] + "\n");
 
 #chart top tracks - threads
 def chart_t():
