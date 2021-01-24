@@ -9,11 +9,13 @@ api_key = keys.lfm_api_key();
 user_agent = keys.lfm_user_agent();
 
 tracks = list(range(0,10));
+empty = [];
 threads  = [];
 
 #threading function
 def thread_reqs(name, artist_name, i, func):
-	searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);	
+	try: searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);
+	except: searches = VideosSearch((name + " - " + artist_name + " lyrics"), limit = 1);
 	if func=="chart":
 		for v in searches.result()['result']:
 			#print(i, "(t)", name, " - ", artist_name);
@@ -24,6 +26,7 @@ def thread_reqs(name, artist_name, i, func):
 
 #chart top tracks - threads
 def chart():
+	#tracks = list(range(0,10));
 	i = 0;
 	try:
 		url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + api_key + "&format=json";
@@ -34,8 +37,9 @@ def chart():
 			threads.append(process);
 			i += 1;
 			if i == 10: break;
-	
-	except Exception as e: print(e);
+	except Exception as e: 
+		print(e);
+		return empty;
 
 	for process in threads:
 		process.join();
@@ -44,6 +48,7 @@ def chart():
 
 #artist top 10 tracks - threads
 def artist(artist):
+	#tracks = list(range(0,10));
 	i = 0;
 	try:
 		url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
@@ -54,7 +59,9 @@ def artist(artist):
 			threads.append(process);
 			i += 1;
 			if i == 10: break;
-	except KeyError: print("Artist not found");
+	except KeyError: 
+		print("Artist Not Found");
+		return empty;
 
 	for process in threads:
 		process.join();
@@ -66,9 +73,12 @@ def artist(artist):
 def genre(genre):
 	tracks.clear();
 	try:
-		searches = VideosSearch(genre+" playlist", limit=10);
+		try: searches = VideosSearch(genre+" playlist", limit=10);
+		except: searches = VideosSearch(genre+" playlist", limit=10);
 		for v in searches.result()['result']:
 			tracks.append(str(v['link']) + " - " + str(v['title']) + "\n");
-	except Exception as e: print(e);
+	except Exception as e: 
+		print(e);
+		return empty;
 
 	return tracks;
