@@ -23,12 +23,12 @@ def thread_reqs(name, artist_name, i, func):
 			tracks[i] = (name + " - " + v['link'] + "\n");
 
 #chart top tracks - threads
-def chart_t():
+def chart():
 	i = 0;
 	url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + api_key + "&format=json";
 	res = req.get(url);
 	for r in res.json()['tracks']['track']:
-		process = threading.Thread(target = thread_reqs, args = [str(r['name']), str(r['artist']['name']), i+1, "chart"]);
+		process = threading.Thread(target = thread_reqs, args = [str(r['name']), str(r['artist']['name']), i, "chart"]);
 		process.start();
 		threads.append(process);
 		i += 1;
@@ -40,7 +40,7 @@ def chart_t():
 	return tracks;
 
 #artist top 10 tracks - threads
-def artist_t(artist):
+def artist(artist):
 	i = 0;
 	try:
 		url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
