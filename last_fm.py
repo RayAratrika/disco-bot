@@ -20,7 +20,6 @@ def thread_reqs(name, artist_name, i, func):
 			tracks[i] = (name + " - " + artist_name + "\n" + v['link'] + "\n");
 	elif func=="artist":
 		for v in searches.result()['result']:
-			#print(i, "(t)", name, " - ", artist_name);
 			tracks[i] = (name + " - " + v['link'] + "\n");
 
 #chart top tracks - threads
@@ -29,7 +28,6 @@ def chart_t():
 	url = "http://ws.audioscrobbler.com/2.0/?method=chart.gettoptracks&api_key=" + api_key + "&format=json";
 	res = req.get(url);
 	for r in res.json()['tracks']['track']:
-		#print(i+1, "(c)", str(r['name']), " - ", str(r['artist']['name']));
 		process = threading.Thread(target = thread_reqs, args = [str(r['name']), str(r['artist']['name']), i+1, "chart"]);
 		process.start();
 		threads.append(process);
@@ -48,7 +46,6 @@ def artist_t(artist):
 		url = "http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=" + artist +"&api_key=" + api_key + "&format=json"
 		res = req.get(url);
 		for r in res.json()['toptracks']['track']:
-			print(i, ". ", str(r['name']), " - ", str(r['artist']['name']));
 			process = threading.Thread(target = thread_reqs, args = [str(r['name']), str(r['artist']['name']), i, "artist"]);
 			process.start();
 			threads.append(process);
